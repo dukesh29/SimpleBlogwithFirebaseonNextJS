@@ -1,17 +1,16 @@
 import {GetServerSideProps} from "next";
-import axiosApi from "../../axiosApi";
-import {ApiPost} from "../../types";
+import {ApiPost, Post} from "../../types";
 import React from "react";
 import PostBodyFull from "../components/PostBody/PostBodyFull";
+import axiosApi2 from "../../axiosApi2";
 
 interface Props {
-  post: ApiPost;
+  post: Post;
 }
 
 const onePost: React.FC<Props> = ({post}) => {
   return (
     <div className='d-flex flex-column align-items-center mt-5 gap-3'>
-      <h1>Your Post</h1>
       <PostBodyFull post={post}/>
     </div>
 
@@ -20,7 +19,8 @@ const onePost: React.FC<Props> = ({post}) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.params?.id as string;
-  const response = await axiosApi.get <ApiPost | null>('/posts/' + id + '.json');
+  const response = await axiosApi2.get <ApiPost | null>('/posts/' + id + '.json');
+  const result = response.data;
 
   if (!response.data) {
     return {
@@ -30,7 +30,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
-      post: response.data,
+      post: {
+        ...result,
+        id
+      }
     }
   }
 };
