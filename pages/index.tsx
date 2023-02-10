@@ -8,7 +8,7 @@ interface Props {
   posts: Post[];
 }
 
-const Home: React.FC<Props> = ({posts}) => {
+const OnePost: React.FC<Props> = ({posts}) => {
   return (
     <div className="container">
       <h1 className='text-center mt-5'>Posts</h1>
@@ -41,4 +41,4 @@ export const getServerSideProps: GetServerSideProps = async () => {
   }
 };
 
-export default Home;
+export default OnePost;
