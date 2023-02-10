@@ -2,6 +2,7 @@ import {GetServerSideProps} from "next";
 import axiosApi from "../axiosApi";
 import {ApiPostsList, Post} from "../types";
 import React from "react";
+import PostBody from "./components/PostBody/PostBody";
 
 interface Props {
   posts: Post[];
@@ -9,15 +10,15 @@ interface Props {
 
 const Home: React.FC<Props> = ({posts}) => {
   return (
-    <>
-      <h1>Posts</h1>
-      {posts.map(post => (
-        <div key={post.id}>
-          <h3>{post.title}</h3>
-          <p>{post.description}</p>
-        </div>
-      ))}
-    </>
+    <div className="container">
+      <h1 className='text-center mt-5'>Posts</h1>
+      <div className='d-flex flex-column align-items-center'>
+        {posts ? posts.map(post => (
+          <PostBody key={post.id} post={post}/>
+        )) : ''}
+      </div>
+
+    </div>
   )
 }
 
